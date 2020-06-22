@@ -1,0 +1,13 @@
+﻿@model TComputerShop.Models.Category
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <form method="post" asp-action="Index">
+        <div class="form-group row">
+            <label asp-for="CategoryName" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="CategoryName" class="form-control-plaintext">
+            </div>
+        </div>
+    </form>
+
