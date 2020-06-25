@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -18,5 +19,9 @@ namespace TComputerShop.DataAccess.Repository.IRepository
         public void Remove(int id);
 
         public void Remove(Category category);
+
+        public void Update(Category category);
+
+        IEnumerable<SelectListItem> GetCategoryListForDropdown();
     }
 }

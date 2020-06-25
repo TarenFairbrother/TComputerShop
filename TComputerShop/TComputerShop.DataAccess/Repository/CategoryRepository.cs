@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using TComputerShop.Data;
 using TComputerShop.DataAccess.Repository.IRepository;
@@ -23,22 +26,45 @@ namespace TComputerShop.DataAccess.Repository
 
         public Category Get(int id)
         {
-            throw new NotImplementedException();
+            Category category = new Category();
+
+            category = _db.Category.Find(id);
+
+            return category;
         }
 
-        public IEnumerable<Category> GetAll()
+        public IEnumerable<Category> GetAll() => _db.Category;
+
+        public IEnumerable<SelectListItem> GetCategoryListForDropdown()
         {
-            throw new NotImplementedException();
+            return _db.Category.Select(i => new SelectListItem()
+            {
+                Text = i.CategoryName,
+                Value = i.Id.ToString()
+            }); ;
         }
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            var objFromDb = _db.Category.Find(id);
+
+            _db.Category.Remove(objFromDb);
+
+            _db.SaveChanges();
         }
 
         public void Remove(Category category)
         {
             throw new NotImplementedException();
+        }
+
+        public void Update(Category category)
+        {
+            var objFromDb = _db.Category.Find(category.Id);
+
+            objFromDb.CategoryName = category.CategoryName;
+
+            _db.SaveChanges();
         }
     }
 }
