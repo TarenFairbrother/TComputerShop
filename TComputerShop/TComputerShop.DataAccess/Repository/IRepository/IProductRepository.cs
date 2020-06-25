@@ -5,8 +5,9 @@ using TComputerShop.Models;
 
 namespace TComputerShop.DataAccess.Repository.IRepository
 {
-    public interface IProductRepository
+    public interface IProductRepository : IRepository<Product>
     {
         public void Add(Product product);
+
     }
 }

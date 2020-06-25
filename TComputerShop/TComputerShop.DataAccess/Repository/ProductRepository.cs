@@ -7,12 +7,12 @@ using TComputerShop.Models;
 
 namespace TComputerShop.DataAccess.Repository
 {
-    public class ProductRepository : IProductRepository
+    public class ProductRepository : Repository<Product>, IProductRepository
     {
 
         private readonly ApplicationDbContext _db;
 
-        public ProductRepository(ApplicationDbContext db)
+        public ProductRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
@@ -21,5 +21,7 @@ namespace TComputerShop.DataAccess.Repository
             _db.Product.Add(product);
             _db.SaveChanges();
         }
+
+        public IEnumerable<Product> GetAll() => _db.Product;
     }
 }

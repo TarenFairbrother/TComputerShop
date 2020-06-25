@@ -14,22 +14,27 @@ namespace TComputerShop.Controllers
 
         private readonly ICategoryRepository _iCatRepo;
         private readonly IProductRepository _iProdRepo;
-
-        [BindProperty]
-       public ProductVM ProdVM { get; set; }
-
+        private ProductVM ProdVM;
+        private ProdIndexVM ProdIndexVM;
 
 
 
-        public ProductController(ICategoryRepository iCatRepo)
+
+        public ProductController(ICategoryRepository iCatRepo, IProductRepository iProdRepo)
         {
             _iCatRepo = iCatRepo;
+            _iProdRepo = iProdRepo;
         }
         public IActionResult Index()
         {
+            ProdIndexVM = new ProdIndexVM()
+            {
+                Products = _iProdRepo.GetAll(includeProperties:"Category")
+                
+            };
             return View();
         }
-        public IActionResult Add(int? id) 
+        public IActionResult Add() 
         {
             ProdVM = new ProductVM()
             {
@@ -41,12 +46,12 @@ namespace TComputerShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Add()
+        public IActionResult Add(ProductVM prodVM)
         {
             if(ModelState.IsValid)
             {
-                _iProdRepo.Add(ProdVM.Product);
-                RedirectToAction(nameof(Index));
+                _iProdRepo.Add(prodVM.Product);
+                return RedirectToAction(nameof(Index));
             }
 
             return View();
