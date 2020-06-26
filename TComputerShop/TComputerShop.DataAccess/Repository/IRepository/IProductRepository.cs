@@ -9,5 +9,7 @@ namespace TComputerShop.DataAccess.Repository.IRepository
     {
         public void Add(Product product);
 
+        public void Remove(int id);
+
     }
 }

@@ -23,6 +23,8 @@ namespace TComputerShop.Models
         [Required]
         public int Quantity { get; set; }
 
+        public bool DailyDeal { get; set; }
+
         [DataType(DataType.ImageUrl)]
         [Display(Name = "Image")]
         public string ImageUrl { get; set; }

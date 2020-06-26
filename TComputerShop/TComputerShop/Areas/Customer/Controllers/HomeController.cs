@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace TComputerShop.Controllers
+namespace TComputerShop.Areas.Customer.Controllers
 {
+
     public class HomeController : Controller
     {
+        [Area("Customer")]
         public IActionResult Index()
         {
             return View();

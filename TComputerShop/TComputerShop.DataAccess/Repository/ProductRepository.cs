@@ -23,5 +23,14 @@ namespace TComputerShop.DataAccess.Repository
         }
 
         public IEnumerable<Product> GetAll() => _db.Product;
+
+        public void Remove(int id)
+        {
+            var objFromDb = _db.Product.Find(id);
+
+            _db.Product.Remove(objFromDb);
+
+            _db.SaveChanges();
+        }
     }
 }

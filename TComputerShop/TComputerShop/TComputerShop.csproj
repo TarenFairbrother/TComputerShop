@@ -21,4 +21,8 @@
     <ProjectReference Include="..\TComputerShop.Models\TComputerShop.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\products\" />
+  </ItemGroup>
+
 </Project>

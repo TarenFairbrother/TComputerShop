@@ -8,8 +8,9 @@ using TComputerShop.DataAccess.Repository.IRepository;
 using TComputerShop.Models;
 using TComputerShop.Models.ViewModels;
 
-namespace TComputerShop.Controllers
-{
+namespace TComputerShop.Areas.Admin.Controllers
+{ 
+    [Area("Admin")]
     public class CategoryController : Controller
     {
 
