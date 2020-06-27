@@ -36,8 +36,7 @@ namespace TComputerShop.Areas.Admin.Controllers
         {
             ProdIndexVM = new ProdIndexVM()
             {
-                Products = _iProdRepo.GetAll(includeProperties:"Category")
-                
+                Products = _iProdRepo.GetAll("Category")                
             };
             return View(ProdIndexVM);
         }
@@ -83,6 +82,62 @@ namespace TComputerShop.Areas.Admin.Controllers
             }
 
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            ProdVM = new ProductVM()
+            {
+                Product = _iProdRepo.GetFirstOrDefault(id),
+                CategoryList = _iCatRepo.GetCategoryListForDropdown()
+            };
+
+            return View(ProdVM);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ProductVM prodVM)
+        {
+            if(ModelState.IsValid)
+            {
+                string webRootPath = _hostEnvironment.WebRootPath;
+
+                var files = HttpContext.Request.Form.Files;
+
+                if (files.Count > 0)
+                {
+                    string fileName = Guid.NewGuid().ToString();
+
+                    var uploads = Path.Combine(webRootPath, @"images\products");
+
+                    var extension = Path.GetExtension(files[0].FileName);
+
+                    if(prodVM.Product.ImageUrl != null)
+                    { 
+                    var imagePath = Path.Combine(webRootPath, prodVM.Product.ImageUrl.TrimStart('\\'));
+
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        System.IO.File.Delete(imagePath);
+                    }
+
+                    }
+
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStreams);
+                    }                  
+                    prodVM.Product.ImageUrl = @"\images\products\" + fileName + extension;
+                }
+                    _iProdRepo.Update(prodVM.Product);
+
+               return RedirectToAction(nameof(Index));
+            }
+
+            return View();
+            
+
         }
     
         public IActionResult Delete(int id)

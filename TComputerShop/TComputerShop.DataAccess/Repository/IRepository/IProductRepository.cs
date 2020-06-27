@@ -11,5 +11,13 @@ namespace TComputerShop.DataAccess.Repository.IRepository
 
         public void Remove(int id);
 
+        public List<Product> GetAll(string category = null);
+
+        public Product GetFirstOrDefault(int id);
+
+        public void Update(Product product);
+
+        public List<Product> GetDailyDeals();
+
     }
 }

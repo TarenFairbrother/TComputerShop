@@ -1,0 +1,131 @@
+﻿@model TComputerShop.Models.ViewModels.ProductVM
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<br />
+<form method="post" asp-action="Edit" enctype="multipart/form-data">
+    <div class="row px-2 mx-2 backgroundWhite border">
+
+            <input type="hidden" asp-for="@Model.Product.Id" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="col-12">
+
+            <h2 class="text-primary text-center">Edit Product</h2>
+
+            <br />
+
+        </div>
+
+        <div class="col-12">
+
+            <div class="form-group row text-center">
+
+                <div class="col-4">
+
+                    <label asp-for="@Model.Product.Name"></label>
+
+                </div>
+
+                <div class="col-6">
+
+                    <input asp-for="@Model.Product.Name" class="form-control" />
+
+                    <span asp-validation-for="@Model.Product.Name" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-group row text-center">
+
+                <div class="col-4">
+
+                    <label asp-for="@Model.Product.Description"></label>
+
+                </div>
+
+                <div class="col-6">
+
+                    <input asp-for="@Model.Product.Description" class="form-control" />
+
+                    <span asp-validation-for="@Model.Product.Description" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-group row text-center">
+
+                <div class="col-4">
+
+                    <label asp-for="@Model.Product.Price"></label>
+
+                </div>
+
+                <div class="col-6">
+
+                    <input asp-for="@Model.Product.Price" class="form-control" />
+
+                    <span asp-validation-for="@Model.Product.Price" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-group row text-center">
+
+                <div class="col-4">
+
+                    <label asp-for="@Model.Product.Quantity"></label>
+
+                </div>
+
+                <div class="col-6">
+
+                    <input asp-for="@Model.Product.Quantity" class="form-control" />
+
+                    <span asp-validation-for="@Model.Product.Quantity" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-group row text-center">
+                <div class="col-4">
+                    <label asp-for="@Model.Product.DailyDeal"></label>
+                </div>
+                <div class="col-6">
+                    @Html.CheckBoxFor(c => c.Product.DailyDeal)
+                </div>
+            </div>
+
+            <div class="form-group row text-center">
+                <div class="col-4">
+                    <label asp-for="@Model.Product.CategoryId"></label>
+                </div>
+                <div class="col-6">
+                    @Html.DropDownListFor(m => m.Product.CategoryId, Model.CategoryList,
+
+                                            "- Please select a Category-", new { @class = "form-control" })
+
+                </div>
+            </div>
+            <div class="form-group row text-center">
+                <div class="col-4">
+                    <label asp-for="Product.ImageUrl"></label>
+                </div>
+                <div class="col-6">
+                    <input type="file" name="files" id="uploadBox" multiple class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row text-center">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <button type="submit" class="btn btn-primary form-control text-center">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
