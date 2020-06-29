@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TComputerShop</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js" />
 </head>
 <body>
     <header>
@@ -18,14 +18,27 @@
 
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
-                    <li class="nav-item active dropdown">
+                    <li class="nav-item  dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Computer Hardware</a>
+                        <div class="nav-item active bg-primary dropdown-menu">
+                            <a class="dropdown-item text-white" asp-area="Customer" asp-action="GetCategory" asp-controller="Product" asp-route-category="Proccessors">Proccessors</a>
+                            <a class="dropdown-item text-white" asp-area="Customer" asp-action="GetCategory" asp-controller="Product" asp-route-category="Video Cards">Video Cards</a>
+                            <a class="dropdown-item text-white" asp-area="Customer" asp-action="GetCategory" asp-controller="Product" asp-route-category="Power Supplies">Power Supplies</a>
+                            <a class="dropdown-item text-white" asp-area="Customer" asp-action="GetCategory" asp-controller="Product" asp-route-category="Motherboards">Motherboards</a>
+                            <a class="dropdown-item text-white" asp-area="Customer" asp-action="GetCategory" asp-controller="Product" asp-route-category="Memory">Memory</a>
+                            <a class="dropdown-item text-white" asp-area="Customer" asp-action="GetCategory" asp-controller="Product" asp-route-category="Monitors">Monitors</a>
+                            <a class="dropdown-item text-white" asp-area="Customer" asp-action="GetCategory" asp-controller="Product" asp-route-category="Mice & Keyboards">Mice & Keyboards</a>
+                            <a class="dropdown-item text-white" asp-area="Customer" asp-action="GetCategory" asp-controller="Product" asp-route-category="Cables & Other">Cables & Other</a>
+                        </div>
+                    </li>
+                    <li class="nav-item  dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
                         <div class="nav-item active bg-primary dropdown-menu">
-                            <a class="dropdown-item text-dark" asp-area="Admin" asp-action="Index" asp-controller="Category">Categories</a>
-                            <a class="dropdown-item text-dark" asp-area="Admin" asp-action="Index" asp-controller="Product">Products</a>
+                            <a class="dropdown-item text-white" asp-area="Admin" asp-action="Index" asp-controller="Category">Categories</a>
+                            <a class="dropdown-item text-white" asp-area="Admin" asp-action="Index" asp-controller="Product">Products</a>
                         </div>
                     </li>
                 </ul>

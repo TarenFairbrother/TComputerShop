@@ -12,26 +12,26 @@ using TComputerShop.Models.ViewModels;
 
 namespace TComputerShop.Areas.Customer.Controllers
 {
-
+    [Area("Customer")]
     public class HomeController : Controller
     {
 
         IProductRepository _iProdRepo;
+        private HomeVM homeVM;
 
         public HomeController(IProductRepository iProdRepo)
         {
             _iProdRepo = iProdRepo;
         }
 
-        [Area("Customer")]
         public IActionResult Index()
         {
-            HomeVM hvm = new HomeVM
+            homeVM = new HomeVM
             {
-                DailyDealProducts = _iProdRepo.GetDailyDeals()
+                Products = _iProdRepo.GetDailyDeals()
             };
               
-            return View(hvm);
+            return View(homeVM);
         }
     }
 }

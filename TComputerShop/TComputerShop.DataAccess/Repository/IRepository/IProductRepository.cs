@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using TComputerShop.Models;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.Linq.Expressions;
 
 namespace TComputerShop.DataAccess.Repository.IRepository
 {
@@ -18,6 +22,8 @@ namespace TComputerShop.DataAccess.Repository.IRepository
         public void Update(Product product);
 
         public List<Product> GetDailyDeals();
+
+        public List<Product> Get(Expression<Func<Product, bool>> filter = null, string includeProperties = null);
 
     }
 }

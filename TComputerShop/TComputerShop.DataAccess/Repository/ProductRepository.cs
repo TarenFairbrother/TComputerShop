@@ -7,6 +7,11 @@ using System.Text;
 using TComputerShop.Data;
 using TComputerShop.DataAccess.Repository.IRepository;
 using TComputerShop.Models;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using Microsoft.AspNetCore.Http;
+using System.Linq.Expressions;
 
 namespace TComputerShop.DataAccess.Repository
 {
@@ -41,7 +46,8 @@ namespace TComputerShop.DataAccess.Repository
 
         public List<Product> GetDailyDeals()
         {
-            IQueryable<Product> query = _db.Product.Where(p => p.DailyDeal);
+            IQueryable<Product> query = _db.Product.Where(p => p.DailyDeal)
+                                                    .Include(c => c.Category);
 
             return query.ToList();
         }
@@ -65,6 +71,11 @@ namespace TComputerShop.DataAccess.Repository
             _db.SaveChanges();
         }
 
+        private void BadRequest()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Product product)
         {
             var objFromDb = _db.Product.FirstOrDefault(p => p.Id == product.Id);
@@ -78,6 +89,26 @@ namespace TComputerShop.DataAccess.Repository
             objFromDb.DailyDeal = product.DailyDeal;
 
             _db.SaveChanges();
+        }
+
+        public List<Product> Get(Expression<Func<Product, bool>> filter = null, string includeProperties = null)
+        {
+
+            IQueryable<Product> query = dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+
+            }
+
+            if (includeProperties != null)
+
+            {
+                    query = query.Include(includeProperties);
+
+            }
+            return query.ToList();
         }
     }
 }
