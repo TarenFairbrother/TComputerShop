@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TComputerShop.DataAccess.Repository.IRepository;
 using TComputerShop.Models;
 using TComputerShop.Models.ViewModels;
 
 namespace TComputerShop.Areas.Admin.Controllers
-{ 
+{
+    [Authorize(Roles ="Admin")]
     [Area("Admin")]
     public class CategoryController : Controller
     {

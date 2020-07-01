@@ -6,6 +6,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ using TComputerShop.Models.ViewModels;
 
 namespace TComputerShop.Areas.Admin.Controllers
 {
+    [Authorize(Roles ="Admin")]
     [Area("Admin")]
     public class ProductController : Controller
     {
@@ -134,9 +136,9 @@ namespace TComputerShop.Areas.Admin.Controllers
                         files[0].CopyTo(fileStreams);
                     }       
                     
-                    string srcImage_Path = @"F:\Github Projects\TComputerShop\TComputerShop\TComputerShop\wwwroot\images\products\" + fileName + extension;
+                    string srcImage_Path = webRootPath + @"\images\products\" + fileName + extension;
 
-                    string resizeImage_Path = @"F:\Github Projects\TComputerShop\TComputerShop\TComputerShop\wwwroot\images\products\" + fileName + "resized" + extension;
+                    string resizeImage_Path = webRootPath + @"\images\products\" + fileName + "resized" + extension;
 
                     int new_Size = 600;
 
