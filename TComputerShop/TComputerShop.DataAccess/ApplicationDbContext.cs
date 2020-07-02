@@ -18,6 +18,8 @@ namespace TComputerShop.Data
 
         public DbSet<Product> Product { get; set; }
 
+        public DbSet<Orders> Orders { get; set; }
+
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
 
     }

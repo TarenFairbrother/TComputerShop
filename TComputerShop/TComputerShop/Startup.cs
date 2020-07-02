@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using TComputerShop.DataAccess.Repository.IRepository;
 using TComputerShop.DataAccess.Repository;
 using TComputerShop.DataAccess.Initializer;
+using Microsoft.CodeAnalysis.Options;
 
 namespace TComputerShop
 {
@@ -39,9 +40,15 @@ namespace TComputerShop
                 .AddDefaultUI();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
-            services.AddSession();
+            services.AddSession(options =>
+                {
+                    options.IdleTimeout = TimeSpan.FromMinutes(30);
+                    options.Cookie.HttpOnly = true;
+                    options.Cookie.IsEssential = true;
+                });
             services.AddRazorPages();
             services.ConfigureApplicationCookie(options =>
             {
