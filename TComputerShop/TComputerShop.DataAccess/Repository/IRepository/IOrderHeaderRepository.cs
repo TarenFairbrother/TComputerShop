@@ -5,8 +5,8 @@ using TComputerShop.Models;
 
 namespace TComputerShop.DataAccess.Repository.IRepository
 {
-    public interface IOrderRepository
+    public interface IOrderHeaderRepository
     {
-        public void Add(Orders Order);
+        public void Add(OrderHeader OrderHeader);
     }
 }

@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace TComputerShop.Models
 {
-    public class Orders
+    public class OrderHeader
     {
         [Key]
         public int Id { get; set; }
-
-        public string OrderNumber { get; set; }
-
         [Required]
         public string Name { get; set; }
 
@@ -38,11 +34,5 @@ namespace TComputerShop.Models
         public double OrderTotal { get; set; }
 
         public DateTime OrderDate { get; set; }
-
-        public int ProductId { get; set; }
-
-        [ForeignKey("ProductId")]
-        public List<Product> Products { get; set; }
-
     }
 }

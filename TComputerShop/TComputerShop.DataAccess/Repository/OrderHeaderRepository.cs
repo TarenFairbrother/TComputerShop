@@ -7,17 +7,18 @@ using TComputerShop.Models;
 
 namespace TComputerShop.DataAccess.Repository
 {
-    public class OrderRepository : IOrderRepository
+    public class OrderHeaderRepository : IOrderHeaderRepository
     {
+
         private readonly ApplicationDbContext _db;
 
-        public OrderRepository(ApplicationDbContext db)
+        public OrderHeaderRepository(ApplicationDbContext db)
         {
             _db = db;
         }
-        public void Add(Orders Order)
+        public void Add(OrderHeader OrderHeader)
         {
-            _db.Orders.Add(Order);
+            _db.OrderHeader.Add(OrderHeader);
             _db.SaveChanges();
         }
     }

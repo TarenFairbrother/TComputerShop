@@ -14,13 +14,17 @@ namespace TComputerShop.Areas.Customer.Controllers
     public class CartController : Controller
     {
         IProductRepository _iProd;
-        IOrderRepository _iOrder;
+        IOrderHeaderRepository _iOrderH;
+        IOrderDetailsRepository _iOrderD;
         private cartVM CartVM;
 
-        public CartController(IProductRepository iProd, IOrderRepository iOrder)
+        public CartController(IProductRepository iProd,
+                              IOrderHeaderRepository iOrderH,
+                              IOrderDetailsRepository iOrderD)
         {
             _iProd = iProd;
-            _iOrder = iOrder;
+            _iOrderH = iOrderH;
+            _iOrderD = iOrderD;
         }
         public IActionResult Index()
         {
@@ -88,28 +92,31 @@ namespace TComputerShop.Areas.Customer.Controllers
         {
             if(ModelState.IsValid)
             {
-                CartVM.Order.OrderNumber = new Guid().ToString();
-                CartVM.Order.OrderDate = DateTime.Now;
-                CartVM.Order.Status = "Submitted";
 
                 List<Item> cart = new List<Item>();
                 cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
 
-                Product product = new Product();
+                CartVM.OrderHeader.OrderDate = DateTime.Now;
+                CartVM.OrderHeader.Status = "Submitted";
+
                 foreach(var item in cart)
                 {
-                    for(int i=0;i<item.Quantity;i++)
-                    {
-                        CartVM.Order.ProductId = item.Product.Id;
-                        //CartVM.Order.Products.Add(item.Product);
-                        product = _iProd.GetFirstOrDefault(CartVM.Order.ProductId);
-                        product.Quantity = product.Quantity - 1;
-                        CartVM.Order.OrderTotal += item.Product.Price;
-                    }
+                    CartVM.OrderHeader.OrderTotal += (item.Product.Price * item.Quantity);
                 }
+                _iOrderH.Add(CartVM.OrderHeader);
 
-                _iOrder.Add(CartVM.Order);
-
+                foreach (var item in cart)
+                {
+                    OrderDetails orderDetails = new OrderDetails
+                    {
+                        OrderHeaderId = CartVM.OrderHeader.Id,
+                        ProductId = item.Product.Id,
+                        ProductQuantity = item.Quantity,
+                        ProductName = item.Product.Name,
+                        ProductPrice = (item.Product.Price * item.Quantity)
+                    };
+                    _iOrderD.Add(orderDetails);
+                }
                 cart.Clear();
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
 

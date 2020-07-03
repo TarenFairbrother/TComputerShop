@@ -8,6 +8,6 @@ namespace TComputerShop.Models.ViewModels
     {
         public List<Item> Items { get; set; }
 
-        public Orders Order { get; set; }
+        public OrderHeader OrderHeader { get; set; }
     }
 }
