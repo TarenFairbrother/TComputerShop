@@ -1,0 +1,42 @@
+﻿@model TComputerShop.Models.ViewModels.OrderVM
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+<h1 class="text-center">Current Orders</h1>
+<br />
+<br />
+    <table class="table table-hover table-bordered p-1">
+        <thead>
+            <tr>
+                <th scope="col">Order Number</th>
+                <th scope="col">Name</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Email</th>
+                <th scope="col">City</th>
+                <th scope="col">Status</th>
+                <th scope="col">Order Date</th>
+                <th scope="col">Order Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model.Orders) { 
+            <tr class="table">
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Email</td>
+                <td>@item.City</td>
+                <td>@item.Status</td>
+                <td>@item.OrderDate</td>
+                <td>$@item.OrderTotal</td>
+                <td>
+                    <a asp-area="Admin" asp-action="Details" asp-controller="Orders" asp-route-id="@item.Id" class="btn btn-primary text-white" style="width:100%">Details</a>
+                <td/>
+            </tr>
+            }
+        </tbody>
+    </table>
+

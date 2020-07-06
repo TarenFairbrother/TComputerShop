@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace TComputerShop.Models
@@ -16,6 +17,7 @@ namespace TComputerShop.Models
         public string PhoneNumber { get; set; }
 
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required]
@@ -34,5 +36,10 @@ namespace TComputerShop.Models
         public double OrderTotal { get; set; }
 
         public DateTime OrderDate { get; set; }
+
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

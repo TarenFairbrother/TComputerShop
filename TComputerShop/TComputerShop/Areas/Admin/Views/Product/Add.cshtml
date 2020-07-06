@@ -64,7 +64,7 @@
 
                 <div class="col-6">
 
-                    <input asp-for="@Model.Product.Price" class="form-control" />
+                    <input asp-for="@Model.Product.Price" class="form-control" id="productPrice" />
 
                     <span asp-validation-for="@Model.Product.Price" class="text-danger"></span>
                 </div>
@@ -119,11 +119,28 @@
             <div class="form-group row text-center">
                 <div class="col-2"></div>
                 <div class="col-8">
-                    <button type="submit" class="btn btn-primary form-control text-center">Add</button>
+                    <button type="submit" onclick="return validateInput()" class="btn btn-primary form-control text-center">Add</button>
                 </div>
             </div>
         </div>
     </div>
 
 </form>
+
+@section Scripts{
+    <script>
+        function validateInput() {
+
+            if (document.getElementById("productPrice").value == 0) {
+
+                swal("Error", "Please enter a price")
+
+                return false;
+            }
+
+            return true;
+
+        };
+    </script>
+}
 

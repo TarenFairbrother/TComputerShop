@@ -44,8 +44,7 @@ namespace TComputerShop.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            Console.WriteLine("Error");
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Delete(int id)

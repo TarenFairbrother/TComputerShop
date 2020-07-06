@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TComputerShop.DataAccess.Helpers;
 using TComputerShop.DataAccess.Repository.IRepository;
@@ -13,18 +14,22 @@ namespace TComputerShop.Areas.Customer.Controllers
     [Area("Customer")]
     public class CartController : Controller
     {
-        IProductRepository _iProd;
-        IOrderHeaderRepository _iOrderH;
-        IOrderDetailsRepository _iOrderD;
+        private readonly IProductRepository _iProd;
+        private readonly IOrderHeaderRepository _iOrderH;
+        private readonly IOrderDetailsRepository _iOrderD;
+        private readonly UserManager<IdentityUser> _userManager;
         private cartVM CartVM;
+
 
         public CartController(IProductRepository iProd,
                               IOrderHeaderRepository iOrderH,
-                              IOrderDetailsRepository iOrderD)
+                              IOrderDetailsRepository iOrderD,
+                              UserManager<IdentityUser> userManager)
         {
             _iProd = iProd;
             _iOrderH = iOrderH;
             _iOrderD = iOrderD;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -37,8 +42,8 @@ namespace TComputerShop.Areas.Customer.Controllers
             return View(CartVM);
         }
         public IActionResult Add(int id)
-        { 
-            if(SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart") == null)
+        {
+            if (SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart") == null)
             {
                 List<Item> cart = new List<Item>();
                 cart.Add(new Item { Product = _iProd.GetFirstOrDefault(id), Quantity = 1 });
@@ -52,7 +57,7 @@ namespace TComputerShop.Areas.Customer.Controllers
                 {
                     cart[index].Quantity++;
                 }
-                else 
+                else
                 {
                     cart.Add(new Item { Product = _iProd.GetFirstOrDefault(id), Quantity = 1 });
                 }
@@ -70,27 +75,36 @@ namespace TComputerShop.Areas.Customer.Controllers
             int index = isExist(id);
             cart.RemoveAt(index);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Cart");
         }
 
+        [HttpGet]
         public IActionResult CheckOut()
         {
-            List<Item> cart = new List<Item>();
-            cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+            var userId = _userManager.GetUserId(this.User);
 
-            cartVM CartVM = new cartVM
+            if (userId != null)
             {
-                Items = cart
-            };
+                List<Item> cart = new List<Item>();
+                cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
 
-            return View(CartVM);
+                cartVM CartVM = new cartVM
+                {
+                    Items = cart
+                };
+
+                return View(CartVM);
+            }
+
+            return LocalRedirect("/Identity/Account/Login");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Checkout(cartVM CartVM)
         {
-            if(ModelState.IsValid)
+
+            if (ModelState.IsValid)
             {
 
                 List<Item> cart = new List<Item>();
@@ -99,10 +113,13 @@ namespace TComputerShop.Areas.Customer.Controllers
                 CartVM.OrderHeader.OrderDate = DateTime.Now;
                 CartVM.OrderHeader.Status = "Submitted";
 
-                foreach(var item in cart)
+                foreach (var item in cart)
                 {
                     CartVM.OrderHeader.OrderTotal += (item.Product.Price * item.Quantity);
                 }
+                var userId = _userManager.GetUserId(this.User);
+
+                CartVM.OrderHeader.UserId = userId;
                 _iOrderH.Add(CartVM.OrderHeader);
 
                 foreach (var item in cart)
@@ -120,10 +137,18 @@ namespace TComputerShop.Areas.Customer.Controllers
                 cart.Clear();
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("OrderConfirmation", "Cart", new { id = CartVM.OrderHeader.Id });
 
             }
             return View(nameof(Index));
+        }
+
+        public IActionResult OrderConfirmation(int id)
+
+        {
+
+            return View(id);
+
         }
 
         private int isExist(int id)

@@ -18,6 +18,7 @@ namespace TComputerShop.Models
         public string Description { get; set; }
 
         [Required]
+        [Range(0.01, 10000)]
         public double Price { get; set; }
 
         [Required]
@@ -28,7 +29,9 @@ namespace TComputerShop.Models
         [DataType(DataType.ImageUrl)]
         [Display(Name = "Image")]
         public string ImageUrl { get; set; }
-        public int CategoryId { get; set; }
+
+        [Required]
+        public int CategoryId { get; set; } 
 
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }

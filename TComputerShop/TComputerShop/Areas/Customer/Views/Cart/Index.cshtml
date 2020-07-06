@@ -32,13 +32,16 @@
                                             <div class="cart_item_title">Price</div>
                                             <div class="cart_item_text">$@item.Product.Price</div>
                                         </div>
-                                        @{ 
+                                        @{
                                             var total = @item.Product.Price * @item.Quantity;
                                             orderTotal = orderTotal + total;
                                         }
                                         <div class="cart_item_total cart_info_col">
                                             <div class="cart_item_title">Total</div>
                                             <div class="cart_item_text">$@total</div>
+                                        </div>
+                                        <div class="cart_item_total cart_info_col">
+                                            <div class="cart_item_text"><a asp-action="Remove" asp-controller="Cart" asp-area="Customer" asp-route-id="@item.Product.Id" class="btn btn-primary">Remove</a></div>
                                         </div>
                                     </div>
                                 </li>

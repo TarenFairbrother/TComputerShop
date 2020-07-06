@@ -80,7 +80,18 @@ namespace TComputerShop.Areas.Admin.Controllers
                         files[0].CopyTo(fileStreams);
                     }
 
-                    prodVM.Product.ImageUrl = @"\images\products\" + fileName + extension;
+                    string srcImage_Path = webRootPath + @"\images\products\" + fileName + extension;
+
+                    string resizeImage_Path = webRootPath + @"\images\products\" + fileName + "resized" + extension;
+
+                    int new_Size = 600;
+
+                    Image_resize(srcImage_Path, resizeImage_Path, new_Size);
+
+
+                    prodVM.Product.ImageUrl = @"\images\products\" + fileName + "resized" + extension;
+
+                    //prodVM.Product.ImageUrl = @"\images\products\" + fileName + extension;
 
                 }
 
@@ -149,6 +160,12 @@ namespace TComputerShop.Areas.Admin.Controllers
                     //prodVM.Product.ImageUrl = @"\images\products\" + fileName + extension;
 
 
+                }
+                else
+                {
+                    Product product = new Product();
+                    product = _iProdRepo.GetFirstOrDefault(prodVM.Product.Id);
+                    prodVM.Product.ImageUrl = product.ImageUrl;
                 }
                     _iProdRepo.Update(prodVM.Product);
 
