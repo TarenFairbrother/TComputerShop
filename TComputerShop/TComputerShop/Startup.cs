@@ -42,6 +42,7 @@ namespace TComputerShop
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderHeaderRepository, OrderHeaderRepository>();
             services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddSession(options =>

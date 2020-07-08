@@ -52,10 +52,17 @@ namespace TComputerShop.Areas.Customer.Controllers
             else
             {
                 List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+                Product product = new Product();
+                product = _iProd.GetFirstOrDefault(id);
                 int index = isExist(id);
                 if (index != -1)
                 {
                     cart[index].Quantity++;
+                    if(product.Quantity < cart[index].Quantity)
+                    {
+                        TempData["SuccessMessage"] = "Can't add anymore to the cart out of stock";
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                 {
@@ -106,7 +113,7 @@ namespace TComputerShop.Areas.Customer.Controllers
 
             if (ModelState.IsValid)
             {
-
+                Product product = new Product();
                 List<Item> cart = new List<Item>();
                 cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
 
@@ -124,6 +131,7 @@ namespace TComputerShop.Areas.Customer.Controllers
 
                 foreach (var item in cart)
                 {
+                    product = _iProd.GetFirstOrDefault(item.Product.Id);
                     OrderDetails orderDetails = new OrderDetails
                     {
                         OrderHeaderId = CartVM.OrderHeader.Id,
@@ -132,6 +140,9 @@ namespace TComputerShop.Areas.Customer.Controllers
                         ProductName = item.Product.Name,
                         ProductPrice = (item.Product.Price * item.Quantity)
                     };
+                    product.Quantity = product.Quantity - item.Quantity;
+
+                    _iProd.Update(product);
                     _iOrderD.Add(orderDetails);
                 }
                 cart.Clear();

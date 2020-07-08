@@ -37,7 +37,7 @@ namespace TComputerShop.Areas.Admin.Controllers
         {
             orderVM = new OrderVM
             {
-                OrderDetails = _iOrderD.Get(o => o.OrderHeaderId == id)
+                OrderDetails = _iOrderD.GetOrderDetails(id)
             };
 
             return View(orderVM);

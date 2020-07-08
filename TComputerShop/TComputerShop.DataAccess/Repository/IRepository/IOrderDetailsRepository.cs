@@ -11,5 +11,7 @@ namespace TComputerShop.DataAccess.Repository.IRepository
         public void Add(OrderDetails OrderDetails);
 
         public List<OrderDetails> Get(Expression<Func<OrderDetails, bool>> filter = null, string includeProperties = null);
+
+        public List<OrderDetails> GetOrderDetails(int id);
     }
 }

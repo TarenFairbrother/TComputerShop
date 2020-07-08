@@ -26,23 +26,12 @@ namespace TComputerShop.DataAccess.Repository
             _db.SaveChanges();
         }
 
-        public List<OrderHeader> Get(Expression<Func<OrderHeader, bool>> filter = null, string includeProperties = null)
+        public List<OrderHeader> GetByUserId(string userId)
         {
 
-            IQueryable<OrderHeader> query = dbSet;
+            IQueryable<OrderHeader> query = _db.OrderHeader.Where(o => o.UserId == userId);
 
-            if (filter != null)
-            {
-                query = query.Where(filter);
-
-            }
-
-            if (includeProperties != null)
-
-            {
-                query = query.Include(includeProperties);
-
-            }
+            
             return query.ToList();
         }
 

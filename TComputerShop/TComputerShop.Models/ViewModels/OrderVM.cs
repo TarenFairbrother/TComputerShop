@@ -9,5 +9,7 @@ namespace TComputerShop.Models.ViewModels
         public List<OrderHeader> Orders { get; set; }
 
         public List<OrderDetails> OrderDetails { get; set; }
+
+        public ApplicationUser User { get; set; }
     }
 }

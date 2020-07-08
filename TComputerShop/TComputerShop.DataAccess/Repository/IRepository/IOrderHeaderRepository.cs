@@ -10,7 +10,7 @@ namespace TComputerShop.DataAccess.Repository.IRepository
     {
         public void Add(OrderHeader OrderHeader);
 
-        public List<OrderHeader> Get(Expression<Func<OrderHeader, bool>> filter = null, string includeProperties = null);
+        public List<OrderHeader> GetByUserId(string userId);
 
         public List<OrderHeader> GetAll();
 

@@ -1,0 +1,182 @@
+﻿@model TComputerShop.Models.ViewModels.UsersVM
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post" asp-action="Edit" enctype="multipart/form-data">
+    <div class="row px-2 mx-2 backgroundWhite border">
+
+        <input type="hidden" asp-for="@Model.User.Id" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="col-12">
+
+            <h2 class="text-primary text-center">User Details</h2>
+
+            <br />
+
+        </div>
+
+        <div class="col-12">
+
+            <div class="form-group row text-center">
+
+                <div class="col-4">
+
+                    <label asp-for="@Model.User.UserName"></label>
+
+                </div>
+
+                <div class="col-6">
+
+                    <input asp-for="@Model.User.UserName" readonly class="form-control" />
+                </div>
+
+            </div>
+
+            <div class="form-group row text-center">
+
+                <div class="col-4">
+
+                    <label asp-for="@Model.User.Name"></label>
+
+                </div>
+
+                <div class="col-6">
+
+                    <input asp-for="@Model.User.Name" readonly class="form-control" />
+
+                </div>
+
+            </div>
+
+            <div class="form-group row text-center">
+
+                <div class="col-4">
+
+                    <label asp-for="@Model.User.Email"></label>
+
+                </div>
+
+                <div class="col-6">
+
+                    <input asp-for="@Model.User.Email" readonly class="form-control" />
+
+                </div>
+
+            </div>
+
+            <div class="form-group row text-center">
+
+                <div class="col-4">
+
+                    <label asp-for="@Model.User.City"></label>
+
+                </div>
+
+                <div class="col-6">
+
+                    <input asp-for="@Model.User.City" readonly class="form-control" />
+
+                </div>
+
+            </div>
+
+            <div class="form-group row text-center">
+
+                <div class="col-4">
+
+                    <label asp-for="@Model.User.Address"></label>
+
+                </div>
+
+                <div class="col-6">
+
+                    <input asp-for="@Model.User.Address" readonly class="form-control" />
+
+                </div>
+
+            </div>
+
+            <div class="form-group row text-center">
+
+                <div class="col-4">
+
+                    <label asp-for="@Model.User.PostalCode"></label>
+
+                </div>
+
+                <div class="col-6">
+
+                    <input asp-for="@Model.User.PostalCode" readonly class="form-control" />
+
+                </div>
+
+            </div>
+            <div class="form-group row text-center">
+
+                <div class="col-4">
+
+                    <label>Admin</label>
+
+                </div>
+                <div class="col-6">
+                    @if (Model.Admin)
+                    {
+                        <label>Currently Admin</label>
+                    }
+                    else
+                    {
+                        <label>Not Admin</label>
+                    }
+                    &nbsp;
+                    @if (Model.Admin)
+                    {
+                        <a asp-controller="Users" asp-action="RemoveAdmin" asp-route-id="@Model.User.Id" class="btn btn-primary">Remove Admin</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Users" asp-action="MakeAdmin" asp-route-id="@Model.User.Id" class="btn btn-primary">Make Admin</a>
+                    }
+                </div>
+
+            </div>
+            <div class="form-group row text-center">
+
+                <div class="col-4">
+
+                    <label>Account Status</label>
+
+                </div>
+                <div class="col-6">
+                    @if (Model.IsLocked)
+                    {
+                        <label>Locked</label>
+                    }
+                    else
+                    {
+                        <label>Unlocked</label>
+                    }
+                    &nbsp;
+                    @if (Model.IsLocked)
+                    {
+                        <a asp-controller="Users" asp-action="Unlock" asp-route-id="@Model.User.Id" class="btn btn-primary">Unlock</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Users" asp-action="Lock" asp-route-id="@Model.User.Id" class="btn btn-primary">Lock</a>
+                    }
+                </div>
+
+            </div>
+            <div class="form-group row text-center">
+                <div class="col-12">
+                    <a asp-action="Index" asp-controller="Users" class="btn btn-primary">Back To Users</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

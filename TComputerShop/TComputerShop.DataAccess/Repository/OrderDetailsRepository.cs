@@ -45,5 +45,14 @@ namespace TComputerShop.DataAccess.Repository
             }
             return query.ToList();
         }
+
+        public List<OrderDetails> GetOrderDetails(int id)
+        {
+            IQueryable<OrderDetails> orders;
+
+            orders = _db.OrderDetails.Where(o => o.OrderHeaderId == id);
+
+            return orders.ToList();
+        }
     }
 }

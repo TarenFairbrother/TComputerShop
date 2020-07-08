@@ -1,0 +1,36 @@
+﻿@model TComputerShop.Models.ViewModels.UsersVM
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+<h1 class="text-center">Current Users</h1>
+<br />
+<br />
+<table class="table table-hover table-bordered p-1">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">UserName</th>
+            <th scope="col">Email</th>
+            <th scope="col">City</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Users)
+        {
+            <tr class="table">
+                <td>@item.Name</td>
+                <td>@item.UserName</td>
+                <td>@item.Email</td>
+                <td>@item.City</td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Details" asp-controller="Users" asp-route-id="@item.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
